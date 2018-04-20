@@ -2,8 +2,11 @@ const express = require('express');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
 const User = require('./api/models/user');
+const Order = require("./api/models/order")
+
 const bodyParser = require("body-parser");
 const userRoutes = require('./api/routes/userRoutes')
+const orderRoutes = require('./api/routes/orderRoutes')
 
 const app = express();
 mongoose.connect("mongodb://Localhost:27017/nodeApi")
@@ -22,13 +25,15 @@ app.use(bodyParser.json());
 app.all((req, res, next)=> {
     res.header("Acces-Control-Allow-Origin", "*");
     res.header("Acces-Control-Allow-Headers", "*");
-    if (req.method === "OPTION") {
+    if (req.method === "OPTIONS") {
         res.header("Acces-Control-Allow-Methods", "PUT", "POST", "GET", "DELETE");
      }
      next();
 })
 
 app.use("/user", userRoutes);
+app.use("/order", orderRoutes);
+
 
 app.use((req, res, next)=>{
     const error = new Error("Not Found");

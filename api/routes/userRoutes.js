@@ -25,7 +25,7 @@ router.post('/', (req, res) => {
     }).catch(err => {
         console.log(err)
         res.status(500).json({
-            error: err
+            'error': err
             
         });
     });
@@ -33,7 +33,7 @@ router.post('/', (req, res) => {
 })
 
 router.get('/:userId', (req,res)=> {
-    const _id= req.params.userId;
+    const _id = req.params.userId;
     User.findById(_id).then(userData => {
         console.log(userData);
         res.status(200).json(userData)
